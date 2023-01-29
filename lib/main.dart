@@ -1,14 +1,20 @@
+import 'package:delivery/screens/login/login_screen.dart';
+import 'package:delivery/styles/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(_App());
+  runApp(const _App());
 }
 
 class _App extends StatelessWidget {
-  const _App({super.key});
+  const _App({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: themeData,
+      home: const LoginScreen(),
+    );
   }
 }
