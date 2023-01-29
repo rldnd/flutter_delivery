@@ -2,22 +2,53 @@ import 'package:delivery/components/layout/default_layout.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-class RootTab extends StatefulWidget {
-  const RootTab({super.key});
+class RootNavigation extends StatefulWidget {
+  const RootNavigation({super.key});
 
   @override
-  State<RootTab> createState() => _RootTabState();
+  State<RootNavigation> createState() => _RootNavigationState();
 }
 
-class _RootTabState extends State<RootTab> {
+class _RootNavigationState extends State<RootNavigation>
+    with SingleTickerProviderStateMixin {
+  late TabController controller;
   int index = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = TabController(length: 4, vsync: this);
+    controller.addListener(tabListener);
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(tabListener);
+    controller.dispose();
+
+    super.dispose();
+  }
+
+  void tabListener() {
+    setState(() {
+      index = controller.index;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '딜리버리',
-      child: Center(
-        child: Text('Root Tab'),
+      child: TabBarView(
+        physics: NeverScrollableScrollPhysics(),
+        controller: controller,
+        children: [
+          Container(child: Text('홈')),
+          Container(child: Text('음식')),
+          Container(child: Text('주문')),
+          Container(child: Text('프로필')),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: C_PRIMARY,
@@ -26,7 +57,7 @@ class _RootTabState extends State<RootTab> {
         unselectedFontSize: 10.0,
         type: BottomNavigationBarType.fixed,
         onTap: (index) {
-          setState(() => this.index = index);
+          controller.animateTo(index);
         },
         currentIndex: index,
         items: [

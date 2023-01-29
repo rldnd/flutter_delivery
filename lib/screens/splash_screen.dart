@@ -1,6 +1,6 @@
 import 'package:delivery/components/layout/default_layout.dart';
-import 'package:delivery/screens/login/login_screen.dart';
-import 'package:delivery/screens/root_tab.dart';
+import 'package:delivery/navigations/root_navigation.dart';
+import 'package:delivery/screens/login_screen.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:delivery/utils/constants/data.dart';
 import 'package:flutter/material.dart';
@@ -37,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
     } else {
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
-          builder: (_) => RootTab(),
+          builder: (_) => RootNavigation(),
         ),
         (route) => false,
       );
