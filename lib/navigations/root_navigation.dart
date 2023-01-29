@@ -1,4 +1,5 @@
 import 'package:delivery/components/layout/default_layout.dart';
+import 'package:delivery/screens/restaurant/restarurant_screen.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -40,16 +41,6 @@ class _RootNavigationState extends State<RootNavigation>
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '딜리버리',
-      child: TabBarView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: controller,
-        children: [
-          Container(child: Text('홈')),
-          Container(child: Text('음식')),
-          Container(child: Text('주문')),
-          Container(child: Text('프로필')),
-        ],
-      ),
       bottomNavigationBar: BottomNavigationBar(
         selectedItemColor: C_PRIMARY,
         unselectedItemColor: C_BODY_TEXT,
@@ -60,7 +51,7 @@ class _RootNavigationState extends State<RootNavigation>
           controller.animateTo(index);
         },
         currentIndex: index,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
             label: '홈',
@@ -77,6 +68,16 @@ class _RootNavigationState extends State<RootNavigation>
             icon: Icon(Icons.person_outlined),
             label: '프로필',
           ),
+        ],
+      ),
+      child: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: controller,
+        children: [
+          const RestaurantScreen(),
+          Container(child: const Text('음식')),
+          Container(child: const Text('주문')),
+          Container(child: const Text('프로필')),
         ],
       ),
     );
