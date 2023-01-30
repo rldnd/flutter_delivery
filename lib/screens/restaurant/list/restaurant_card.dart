@@ -1,3 +1,4 @@
+import 'package:delivery/models/restaurant/restaurant_model.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,21 @@ class RestaurantCard extends StatelessWidget {
     required this.deliveryTime,
     required this.ratings,
   });
+
+  factory RestaurantCard.fromModel({required RestaurantModel model}) {
+    return RestaurantCard(
+      imageWidget: Image.network(
+        model.thumbUrl,
+        fit: BoxFit.cover,
+      ),
+      name: model.name,
+      tags: model.tags,
+      ratingsCount: model.ratingsCount,
+      ratings: model.ratings,
+      deliveryTime: model.deliveryTime,
+      deliveryFee: model.deliveryFee,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
