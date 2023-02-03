@@ -1,5 +1,5 @@
 import 'package:delivery/models/restaurant/restaurant_model.dart';
-import 'package:delivery/screens/restaurant/restarurant_detail_screen.dart';
+import 'package:delivery/screens/restaurant/restaurant_detail_screen.dart';
 import 'package:delivery/screens/restaurant/_shared/restaurant_card.dart';
 import 'package:delivery/utils/constants/data.dart';
 import 'package:dio/dio.dart';
@@ -32,7 +32,7 @@ class RestaurantScreen extends StatelessWidget {
           future: getPaginateRestaurant(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return Container();
+              return const Center(child: CircularProgressIndicator());
             }
 
             return ListView.separated(
@@ -44,7 +44,7 @@ class RestaurantScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => RestaurantDetailScreen(),
+                        builder: (_) => RestaurantDetailScreen(id: item['id']),
                       ),
                     );
                   },
