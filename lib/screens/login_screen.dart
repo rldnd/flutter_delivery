@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:delivery/components/custom_text_form_field.dart';
+import 'package:delivery/components/common/custom_text_form_field.dart';
 import 'package:delivery/components/layout/default_layout.dart';
+import 'package:delivery/navigations/root_navigation.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:delivery/utils/constants/data.dart';
 import 'package:dio/dio.dart';
@@ -81,6 +82,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     await storage.write(
                         key: REFRESH_TOKEN, value: refreshToken);
                     await storage.write(key: ACCESS_TOKEN, value: accessToken);
+
+                    Navigator.of(context).pushAndRemoveUntil(
+                        MaterialPageRoute(
+                          builder: (_) => RootNavigation(),
+                        ),
+                        (route) => false);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: C_PRIMARY,
