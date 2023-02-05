@@ -1,5 +1,5 @@
 import 'package:delivery/components/layout/default_layout.dart';
-import 'package:delivery/screens/restaurant/restarurant_screen.dart';
+import 'package:delivery/screens/restaurant/restaurant_screen.dart';
 import 'package:delivery/styles/colors.dart';
 import 'package:flutter/material.dart';
 

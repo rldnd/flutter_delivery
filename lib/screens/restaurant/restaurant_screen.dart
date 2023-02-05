@@ -1,3 +1,4 @@
+
 import 'package:delivery/models/restaurant/restaurant_model.dart';
 import 'package:delivery/screens/restaurant/restaurant_detail_screen.dart';
 import 'package:delivery/screens/restaurant/_shared/restaurant_card.dart';
