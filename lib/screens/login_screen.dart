@@ -85,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
-                          builder: (_) => RootNavigation(),
+                          builder: (_) => const RootNavigation(),
                         ),
                         (route) => false);
                   },

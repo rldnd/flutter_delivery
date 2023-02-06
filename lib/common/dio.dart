@@ -12,6 +12,8 @@ class CustomInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    print('[REQ] [${options.method}] ${options.uri}');
+
     if (options.headers['accessToken'] == 'true') {
       options.headers.remove('accessToken');
 
@@ -35,11 +37,54 @@ class CustomInterceptor extends Interceptor {
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
-    super.onResponse(response, handler);
+    print(
+        '[RES] [${response.requestOptions.method}] ${response.requestOptions.uri}');
+
+    return super.onResponse(response, handler);
   }
 
   @override
-  void onError(DioError err, ErrorInterceptorHandler handler) {
-    super.onError(err, handler);
+  void onError(DioError err, ErrorInterceptorHandler handler) async {
+    print('[ERR] [${err.requestOptions.method}] ${err.requestOptions.uri}');
+
+    final refreshToken = await storage.read(key: REFRESH_TOKEN);
+    if (refreshToken == null) {
+      handler.reject(err);
+      return;
+    }
+
+    final isStatus401 = err.response?.statusCode == 401;
+    final isPathRefresh = err.requestOptions.path == '/auth/token';
+
+    if (isStatus401 && !isPathRefresh) {
+      try {
+        final dio = Dio();
+
+        final response = await dio.post(
+          'http://$ip/auth/token',
+          options: Options(
+            headers: {
+              'authorization': 'Bearer $refreshToken',
+            },
+          ),
+        );
+
+        final accessToken = response.data['accessToken'];
+        final options = err.requestOptions;
+
+        options.headers.addAll({
+          'authorization': 'Bearer $accessToken',
+        });
+
+        await storage.write(key: ACCESS_TOKEN, value: accessToken);
+
+        final refetchResponse = await dio.fetch(options);
+        return handler.resolve(refetchResponse);
+      } on DioError catch (e) {
+        return handler.reject(e);
+      }
+    }
+
+    return super.onError(err, handler);
   }
 }

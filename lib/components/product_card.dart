@@ -1,6 +1,5 @@
 import 'package:delivery/models/restaurant/restaurant_detail_model.dart';
 import 'package:delivery/styles/colors.dart';
-import 'package:delivery/utils/constants/data.dart';
 import 'package:flutter/material.dart';
 
 class ProductCard extends StatelessWidget {
@@ -48,18 +47,19 @@ class ProductCard extends StatelessWidget {
               children: [
                 Text(
                   name,
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+                  style: const TextStyle(
+                      fontSize: 18.0, fontWeight: FontWeight.w500),
                 ),
                 Text(
                   detail,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(color: C_BODY_TEXT, fontSize: 14.0),
+                  style: const TextStyle(color: C_BODY_TEXT, fontSize: 14.0),
                 ),
                 Text(
                   '₩$price',
                   textAlign: TextAlign.end,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: C_PRIMARY,
                     fontSize: 12.0,
                     fontWeight: FontWeight.w500,
