@@ -13,6 +13,7 @@ abstract class RestaurantRepository {
   // paginate();
 
   @GET('/{id}')
+  @Headers({'accessToken': 'true'})
   Future<RestaurantDetailModel> getRestaurantDetail({
     @Path() required String id,
   });

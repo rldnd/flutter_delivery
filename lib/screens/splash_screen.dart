@@ -17,6 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    // deleteToken();
     checkToken();
   }
 
@@ -28,34 +29,14 @@ class _SplashScreenState extends State<SplashScreen> {
     final refreshToken = await storage.read(key: REFRESH_TOKEN);
     final accessToken = await storage.read(key: ACCESS_TOKEN);
 
-    final dio = Dio();
-
-    try {
-      final response = await dio.post(
-        'http://$ip/auth/token',
-        options: Options(
-          headers: {
-            'authorization': 'Bearer $refreshToken',
-          },
-        ),
-      );
-
-      await storage.write(
-        key: ACCESS_TOKEN,
-        value: response.data['accessToken'],
-      );
-
+    if (refreshToken == null || accessToken == null) {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (_) => RootNavigation(),
-        ),
+        MaterialPageRoute(builder: (_) => LoginScreen()),
         (route) => false,
       );
-    } catch (error) {
+    } else {
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(
-          builder: (_) => const LoginScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => RootNavigation()),
         (route) => false,
       );
     }

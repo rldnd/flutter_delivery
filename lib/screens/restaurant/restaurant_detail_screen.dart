@@ -1,3 +1,4 @@
+import 'package:delivery/common/dio.dart';
 import 'package:delivery/components/layout/default_layout.dart';
 import 'package:delivery/components/product_card.dart';
 import 'package:delivery/models/restaurant/restaurant_detail_model.dart';
@@ -19,10 +20,6 @@ class RestaurantDetailScreen extends StatelessWidget {
       child: FutureBuilder<RestaurantDetailModel>(
         future: getRestaurantDetail(),
         builder: (context, snapshot) {
-          if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
-          }
-
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
           }
@@ -41,6 +38,7 @@ class RestaurantDetailScreen extends StatelessWidget {
 
   Future<RestaurantDetailModel> getRestaurantDetail() async {
     final dio = Dio();
+    dio.interceptors.add(CustomInterceptor(storage: storage));
 
     final repository =
         RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
