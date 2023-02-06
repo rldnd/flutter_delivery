@@ -30,8 +30,6 @@ class CustomInterceptor extends Interceptor {
       });
     }
 
-    print('[REQ] [${options.method}] ${options.uri} ${options.headers}');
-
     return super.onRequest(options, handler);
   }
 
