@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final dio = Dio();
 
     return DefaultLayout(
@@ -80,8 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     final refreshToken = resp.data['refreshToken'];
                     final accessToken = resp.data['accessToken'];
 
-                    await storage.write(key: REFRESH_TOKEN_KEY, value: refreshToken);
-                    await storage.write(key: ACCESS_TOKEN_KEY, value: accessToken);
+                    await storage.write(
+                        key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    await storage.write(
+                        key: ACCESS_TOKEN_KEY, value: accessToken);
 
                     Navigator.of(context).push(
                       MaterialPageRoute(
@@ -90,18 +91,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    primary: PRIMARY_COLOR,
+                    backgroundColor: PRIMARY_COLOR,
                   ),
                   child: Text(
                     '로그인',
                   ),
                 ),
                 TextButton(
-                  onPressed: () async {
-
-                  },
+                  onPressed: () async {},
                   style: TextButton.styleFrom(
-                    primary: Colors.black,
+                    backgroundColor: Colors.black,
                   ),
                   child: Text(
                     '회원가입',

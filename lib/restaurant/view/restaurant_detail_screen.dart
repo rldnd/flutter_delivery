@@ -25,7 +25,8 @@ class RestaurantDetailScreen extends StatelessWidget {
       ),
     );
 
-    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+    final repository =
+        RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
 
     return repository.getRestaurantDetail(id: id);
   }
@@ -37,7 +38,7 @@ class RestaurantDetailScreen extends StatelessWidget {
       child: FutureBuilder<RestaurantDetailModel>(
         future: getRestaurantDetail(),
         builder: (_, AsyncSnapshot<RestaurantDetailModel> snapshot) {
-          if(snapshot.hasError){
+          if (snapshot.hasError) {
             return Center(
               child: Text(snapshot.error.toString()),
             );
