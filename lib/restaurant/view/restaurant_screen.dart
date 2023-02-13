@@ -1,26 +1,60 @@
+import 'package:actual/common/model/cursor_pagination_model.dart';
 import 'package:actual/restaurant/component/restaurant_card.dart';
 import 'package:actual/restaurant/provider/restaurant_provider.dart';
 import 'package:actual/restaurant/view/restaurant_detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class RestaurantScreen extends ConsumerWidget {
+class RestaurantScreen extends ConsumerStatefulWidget {
   const RestaurantScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<RestaurantScreen> createState() => _RestaurantScreenState();
+}
+
+class _RestaurantScreenState extends ConsumerState<RestaurantScreen> {
+  final ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.addListener(scrollListener);
+  }
+
+  void scrollListener() {
+    if (controller.offset > controller.position.maxScrollExtent - 300) {
+      ref.read(restaurantProvider.notifier).paginate(fetchMore: true);
+    }
+  }
+
+  @override
+  void dispose() {
+    controller.removeListener(scrollListener);
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final data = ref.watch(restaurantProvider);
 
-    if (data.length == 0) {
+    if (data is CursorPaginationLoading) {
       return Center(child: const CircularProgressIndicator());
     }
+
+    if (data is CursorPaginationError) {
+      return Center(child: Text(data.message));
+    }
+
+    final cp = data as CursorPagination;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: ListView.separated(
-        itemCount: data.length,
+        controller: controller,
+        itemCount: cp.data.length,
         itemBuilder: (_, index) {
-          final pItem = data[index];
+          final pItem = cp.data[index];
 
           return GestureDetector(
             onTap: () {
