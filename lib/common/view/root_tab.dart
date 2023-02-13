@@ -10,8 +10,7 @@ class RootTab extends StatefulWidget {
   State<RootTab> createState() => _RootTabState();
 }
 
-class _RootTabState extends State<RootTab>
-    with SingleTickerProviderStateMixin {
+class _RootTabState extends State<RootTab> with SingleTickerProviderStateMixin {
   late TabController controller;
 
   int index = 0;
@@ -32,8 +31,8 @@ class _RootTabState extends State<RootTab>
     super.dispose();
   }
 
-  void tabListener(){
-    setState((){
+  void tabListener() {
+    setState(() {
       index = controller.index;
     });
   }
@@ -41,7 +40,7 @@ class _RootTabState extends State<RootTab>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      title: '코팩 딜리버리',
+      title: '딜리버리',
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         controller: controller,

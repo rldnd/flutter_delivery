@@ -22,7 +22,6 @@ final restaurantRepositoryProvider = Provider<RestaurantRepository>(
 
 @RestApi()
 abstract class RestaurantRepository {
-  // http://$ip/restaurant
   factory RestaurantRepository(Dio dio, {String baseUrl}) =
       _RestaurantRepository;
 
