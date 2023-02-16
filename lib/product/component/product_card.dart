@@ -1,4 +1,5 @@
 import 'package:actual/common/const/colors.dart';
+import 'package:actual/product/model/product_model.dart';
 import 'package:actual/restaurant/model/restaurant_detail_model.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,21 @@ class ProductCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  factory ProductCard.fromModel({
+  factory ProductCard.fromProductModel({required ProductModel model}) {
+    return ProductCard(
+      image: Image.network(
+        model.imgUrl,
+        width: 110,
+        height: 110,
+        fit: BoxFit.cover,
+      ),
+      name: model.name,
+      detail: model.detail,
+      price: model.price,
+    );
+  }
+
+  factory ProductCard.fromRestaurantProductModel({
     required RestaurantProductModel model,
   }) {
     return ProductCard(
@@ -31,13 +46,6 @@ class ProductCard extends StatelessWidget {
       price: model.price,
     );
   }
-
-  // Image.asset(
-  // 'asset/img/food/ddeok_bok_gi.jpg',
-  // width: 110,
-  // height: 110,
-  // fit: BoxFit.cover,
-  // )
 
   @override
   Widget build(BuildContext context) {
