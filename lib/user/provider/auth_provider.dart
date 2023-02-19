@@ -23,6 +23,10 @@ class AuthProvider extends ChangeNotifier {
     });
   }
 
+  void logout() {
+    ref.read(userMeProvider.notifier).logout();
+  }
+
   // Splash screen
   FutureOr<String?> redirectLogic(BuildContext context, GoRouterState state) {
     final UserModelBase? user = ref.read(userMeProvider);
