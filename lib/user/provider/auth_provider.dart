@@ -44,6 +44,7 @@ class AuthProvider extends ChangeNotifier {
             routes: [
               GoRoute(
                 path: 'restaurant/:rid',
+                name: RestaurantDetailScreen.routeName,
                 builder: (context, state) => RestaurantDetailScreen(
                   id: state.params['rid']!,
                 ),

@@ -88,7 +88,7 @@ class _PaginationListViewState<T extends IModelWithId>
       child: ListView.separated(
         controller: controller,
         itemCount: cp.data.length + 1,
-        itemBuilder: (_, index) {
+        itemBuilder: <T>(_, index) {
           if (index == cp.data.length) {
             return Padding(
               padding:
