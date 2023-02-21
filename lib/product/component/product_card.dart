@@ -120,13 +120,19 @@ class ProductCard extends ConsumerWidget {
           ),
         ),
         if (onSubtract != null && onAdd != null)
-          _Footer(
-            total: (basket.firstWhere((e) => e.product.id == id).count *
-                    basket.firstWhere((e) => e.product.id == id).product.price)
-                .toString(),
-            count: basket.firstWhere((e) => e.product.id == id).count,
-            onSubtract: onSubtract!,
-            onAdd: onAdd!,
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: _Footer(
+              total: (basket.firstWhere((e) => e.product.id == id).count *
+                      basket
+                          .firstWhere((e) => e.product.id == id)
+                          .product
+                          .price)
+                  .toString(),
+              count: basket.firstWhere((e) => e.product.id == id).count,
+              onSubtract: onSubtract!,
+              onAdd: onAdd!,
+            ),
           )
       ],
     );
@@ -160,9 +166,10 @@ class _Footer extends StatelessWidget {
             ),
           ),
         ),
-        renderButton(icon: Icons.remove, onTap: onAdd),
         Row(
           children: [
+            renderButton(icon: Icons.remove, onTap: onSubtract),
+            const SizedBox(width: 8.0),
             Text(
               count.toString(),
               style: TextStyle(
@@ -172,7 +179,8 @@ class _Footer extends StatelessWidget {
             ),
           ],
         ),
-        renderButton(icon: Icons.add, onTap: onSubtract),
+        const SizedBox(width: 8.0),
+        renderButton(icon: Icons.add, onTap: onAdd),
       ],
     );
   }
