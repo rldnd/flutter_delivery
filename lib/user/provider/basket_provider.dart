@@ -18,6 +18,10 @@ class BasketStateNotifier extends StateNotifier<List<BasketItemModel>> {
 
   BasketStateNotifier({required this.repository}) : super([]);
 
+  void clearBasket() {
+    state = [];
+  }
+
   Future<void> updateBasket() async {
     await repository.updateBasket(
       body: UpdateBasketBody(

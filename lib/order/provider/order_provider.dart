@@ -43,6 +43,8 @@ class OrderStateNotifier extends StateNotifier<List<OrderModel>> {
         ),
       );
 
+      ref.read(basketProvider.notifier).clearBasket();
+
       return true;
     } catch (e) {
       return false;
